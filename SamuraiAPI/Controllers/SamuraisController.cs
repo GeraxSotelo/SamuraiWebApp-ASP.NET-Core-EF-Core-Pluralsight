@@ -111,6 +111,14 @@ namespace SamuraiAPI.Controllers
             return samurai;
         }
 
+        [HttpDelete("sproc/{id}")]
+        public async Task<ActionResult<string>> DeleteQuotesForSamurai(int id)
+        {
+            //DeleteQuotesForSamurai was created in Stored Procedures
+            var rowsAffected = await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC DeleteQuotesForSamurai {id}");
+            return $"{rowsAffected} Quotes deleted";
+        }
+
         private bool SamuraiExists(int id)
         {
             return _context.Samurais.Any(e => e.Id == id);
