@@ -10,6 +10,14 @@ namespace SamuraiApp.Data
     //DbContext will provide all the logic that EF Core is going to use to do it's change tracking and data base interaction tasks.
     public class SamuraiContext : DbContext
     {
+        //CONSTRUCTOR - takes in the DbContext options
+        //The internal DbContext class already has a constructor like this,
+        //add 'base' so it'll do whatever the base class's matching constructor already knows how to do with the 'options'
+        public SamuraiContext(DbContextOptions<SamuraiContext> options) : base(options)
+        {
+
+        }
+
         //A DbContext needs to expose DbSets, which become wrappers to the different types that you'll interact with while you're using the context.
         public DbSet<Samurai> Samurais { get; set; }
         public DbSet<Quote> Quotes { get; set; }

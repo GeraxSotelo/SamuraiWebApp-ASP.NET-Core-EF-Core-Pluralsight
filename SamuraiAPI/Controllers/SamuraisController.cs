@@ -18,6 +18,8 @@ namespace SamuraiAPI.Controllers
 
         public SamuraisController(SamuraiContext context)
         {
+            //The controller uses a SamuraiContext instance and expects this instance to be passed in to its constructor
+            //Whatever instantiates the controller needs to instantiate the DbContext first
             _context = context;
         }
 
@@ -96,6 +98,7 @@ namespace SamuraiAPI.Controllers
                 return NotFound();
             }
 
+            //The DELETE request uses the Remove() method to start tracking
             _context.Samurais.Remove(samurai);
             await _context.SaveChangesAsync();
 

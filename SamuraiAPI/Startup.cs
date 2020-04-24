@@ -27,6 +27,8 @@ namespace SamuraiAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //Tell ASP.NET Core any time it finds a constructor that expects an instance of SamuraiContext, but doesn't have one, create it on the fly & use these options 
             //AddDbContext method expects a lambda to describe the DbContext options
             services.AddDbContext<SamuraiContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("SamuraiConnex")).EnableSensitiveDataLogging());
         }
