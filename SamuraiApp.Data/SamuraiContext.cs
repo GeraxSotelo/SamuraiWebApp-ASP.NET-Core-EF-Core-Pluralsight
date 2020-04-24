@@ -15,7 +15,9 @@ namespace SamuraiApp.Data
         //add 'base' so it'll do whatever the base class's matching constructor already knows how to do with the 'options'
         public SamuraiContext(DbContextOptions<SamuraiContext> options) : base(options)
         {
-
+            //Disable tracking all together
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            //If you add logic that needs query results to be tracked within a particular method, you would have to change your strategy
         }
 
         //A DbContext needs to expose DbSets, which become wrappers to the different types that you'll interact with while you're using the context.
