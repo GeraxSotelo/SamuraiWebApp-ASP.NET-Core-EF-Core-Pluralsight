@@ -55,7 +55,10 @@ namespace SamuraiAPI.Controllers
                 return BadRequest();
             }
 
+            //Start tracking the samurai object
             _context.Entry(samurai).State = EntityState.Modified;
+            //using Entry(), not Update() in case incoming object contains related data. The controller method is only intended to update a samurai
+            //The Entry method will only track the head of any graph that's passed in, ignoring anything connected to it
 
             try
             {
@@ -92,6 +95,7 @@ namespace SamuraiAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Samurai>> DeleteSamurai(int id)
         {
+            //Using FindAsync() to get the samurai object so the code can pass it to the Remove() method
             var samurai = await _context.Samurais.FindAsync(id);
             if (samurai == null)
             {
@@ -99,6 +103,8 @@ namespace SamuraiAPI.Controllers
             }
 
             //The DELETE request uses the Remove() method to start tracking
+            //Using Remove(), not context.Entry(), with the knowledge that there is no related data attached to the samurai
+            //The code knows that it only retrieved a samurai, not a graph with related data
             _context.Samurais.Remove(samurai);
             await _context.SaveChangesAsync();
 
